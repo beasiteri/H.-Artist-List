@@ -4,7 +4,7 @@ import Image from "next/image";
 export const artistColumns: GridColDef[] = [
   { 
     field: "portrait", 
-    headerName: "Kép",
+    headerName: "Borító",
     width: 90,
     renderCell: (params) =>
       params.value && (
@@ -18,6 +18,6 @@ export const artistColumns: GridColDef[] = [
         />
       )
   },
-  { field: "name", headerName: "Név", width: 500 },
+  { field: "name", headerName: "Előadó", width: 500 },
   { field: "albumCount", headerName: "Albumok", type: "number", width: 120 },
 ];
