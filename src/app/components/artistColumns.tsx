@@ -1,23 +1,13 @@
-import { GridColDef } from "@mui/x-data-grid";
 import Image from "next/image";
 
-export const artistColumns: GridColDef[] = [
-  { 
-    field: "portrait", 
-    headerName: "Borító",
+export const artistColumns = [
+  {
+    title: "Borító",
+    dataIndex: "portrait",
+    key: "portrait",
     width: 90,
-    renderCell: (params) =>
-      params.value && (
-        <Image
-          src={params.value}
-          alt={params.row.name}
-          width={50}
-          height={50}
-          style={{ borderRadius: "5px" }}
-          unoptimized
-        />
-      )
+    render: (src: string, record: { name: string }) => src && <Image src={src} alt={record.name} style={{ width: 50, height: 50, borderRadius: 5 }} />,
   },
-  { field: "name", headerName: "Előadó", width: 500 },
-  { field: "albumCount", headerName: "Albumok", type: "number", width: 120 },
+  { title: "Előadó", dataIndex: "name", key: "name", width: 500 },
+  { title: "Albumok", dataIndex: "albumCount", key: "albumCount", width: 120 },
 ];
