@@ -79,7 +79,6 @@ export const Artists = () => {
         <Select
           value={typeOptions[selectedType] || "Elsődleges"}
           onChange={(value) => updateURLWithFilters(undefined, undefined, value)}
-          allowClear
           style={{ width: 160 }}
         >
           {selectedType !== "is_primary" && <Select.Option value="is_primary">Elsődleges</Select.Option>}
