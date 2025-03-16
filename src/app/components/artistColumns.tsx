@@ -1,6 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Button, TableColumnsType } from "antd";
-import { sortByAlbumCount, sortByName } from "../utils/utility";
+import { sortByName } from "../utils/utility";
 import Image from "next/image";
 import type { InputRef } from "antd";
 import { Artist } from "../services/interfaces";
@@ -22,7 +22,6 @@ export const artistColumns = (
     dataIndex: "name",
     key: "name",
     width: 500,
-    sorter: sortByName,
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -69,6 +68,6 @@ export const artistColumns = (
     dataIndex: "albumCount",
     key: "albumCount",
     width: 120,
-    sorter: sortByAlbumCount,
+    sorter: (a, b) => a.albumCount - b.albumCount,
   },
 ];

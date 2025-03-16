@@ -10,6 +10,7 @@ export interface FetchArtistsParams {
   search?: string;
   page?: number;
   per_page?: number;
+  orderBy?: string;
 }
 
 export interface Artist {
