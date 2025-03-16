@@ -12,7 +12,7 @@ export interface FetchArtistsParams {
   per_page?: number;
 }
 
-interface Artist {
+export interface Artist {
   id: number;
   name: string;
   albumCount: number;
