@@ -45,8 +45,6 @@ export const Artists = () => {
         params.type = selectedType;
       }
   
-      console.log("Fetching artists with params:", params); // Debugging log
-  
       const response = await fetchArtists(params);
       setDisplayedArtists(response.data.slice(0, 50));
       setTotalItems(response.pagination.total_items);
