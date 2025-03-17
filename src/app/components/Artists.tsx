@@ -9,7 +9,7 @@ import { artistColumns } from "./artistColumns";
 
 export const Artists = () => {
   const router = useRouter();
-  const [initialLoading, setInitialLoading] = useState<boolean>(true); // New state for initial loading
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const [displayedArtists, setDisplayedArtists] = useState<ApiResponse["data"]>([]);
   const [page, setPage] = useState<number>(1);
@@ -37,7 +37,6 @@ export const Artists = () => {
       });
       setDisplayedArtists(response.data.slice(0, 50));
       setTotalItems(response.pagination.total_items);
-      updateURLWithFilters(searchText, selectedLetter, selectedType, newPage);
     } catch (err) {
       console.error("Error fetching artists:", err);
     } finally {
@@ -57,7 +56,11 @@ export const Artists = () => {
     setSelectedType(params.get("type") || "is_primary");
 
     fetchArtistsForPage(1, true);
-  }, [searchText, selectedLetter, selectedType]);
+  }, []);
+
+  useEffect(() => {
+    fetchArtistsForPage(page);
+  }, [page, searchText, selectedLetter, selectedType]);
 
   const updateURLWithFilters = (
     searchValue?: string,
@@ -66,6 +69,7 @@ export const Artists = () => {
     pageValue?: number
   ) => {
     const params = new URLSearchParams(window.location.search);
+
     if (searchValue && searchValue.trim() !== "") {
       params.set("search", searchValue);
     } else {
@@ -90,10 +94,11 @@ export const Artists = () => {
 
     router.replace(`?${params.toString()}`);
 
-    if (searchValue !== undefined) setSearchText(searchValue);
-    if (letterValue !== undefined) setSelectedLetter(letterValue);
-    if (typeValue !== undefined) setSelectedType(typeValue);
-    if (pageValue !== undefined) setPage(pageValue);
+    // Only update state if the value has changed
+    if (searchValue !== undefined && searchValue !== searchText) setSearchText(searchValue);
+    if (letterValue !== undefined && letterValue !== selectedLetter) setSelectedLetter(letterValue);
+    if (typeValue !== undefined && typeValue !== selectedType) setSelectedType(typeValue);
+    if (pageValue !== undefined && pageValue !== page) setPage(pageValue);
   };
 
   const typeOptions: Record<string, string> = {
@@ -111,9 +116,7 @@ export const Artists = () => {
       ) : (
         <>
           <h1>Előadók és zeneszerzők</h1>
-          {displayedArtists.length > 0 && (
-            <>
-              <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
+          <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
             <Select
               value={typeOptions[selectedType] || "Elsődleges"}
               onChange={(value) => updateURLWithFilters(undefined, undefined, value)}
@@ -124,8 +127,6 @@ export const Artists = () => {
               {selectedType !== "is_performer" && <Select.Option value="is_performer">Előadó</Select.Option>}
             </Select>
           </div>
-            </>
-          )}
           {loading ? (
             <div style={{ textAlign: "center", marginTop: 50 }}>
               <Spin size="large" />
@@ -146,7 +147,6 @@ export const Artists = () => {
                 showSizeChanger: false,
                 onChange: (newPage) => {
                   setPage(newPage);
-                  fetchArtistsForPage(newPage);
                 },
               }}
             />
