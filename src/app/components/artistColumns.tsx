@@ -1,4 +1,4 @@
-import { FilterOutlined } from "@ant-design/icons";
+import { FilterOutlined, FilterFilled } from "@ant-design/icons";
 import { Input, Button, TableColumnsType } from "antd";
 import Image from "next/image";
 import type { InputRef } from "antd";
@@ -57,9 +57,12 @@ export const artistColumns = (
           </div>
         )
       : undefined,
-    filterIcon: hasData
-      ? (filtered) => <FilterOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
-      : undefined,
+    filterIcon: (filtered) =>
+      filtered ? (
+        <FilterFilled style={{ color: "#1890ff" }} />
+      ) : (
+        <FilterOutlined style={{ color: "#bfbfbf" }} />
+      ),
     onFilter: hasData
       ? (value, record) => typeof value === "string" && record.name.toLowerCase().includes(value.toLowerCase())
       : undefined,

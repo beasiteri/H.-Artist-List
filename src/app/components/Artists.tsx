@@ -147,6 +147,7 @@ export const Artists = () => {
                 showSizeChanger: false,
                 onChange: (newPage) => {
                   setPage(newPage);
+                  updateURLWithFilters(searchText, selectedLetter, selectedType, newPage);
                 },
               }}
             />

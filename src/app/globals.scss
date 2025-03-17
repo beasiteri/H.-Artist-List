@@ -206,6 +206,17 @@ $placeholder-color: #6f6a6a;
   user-select: none;
 }
 
+:where(.css-dev-only-do-not-override-240cud).ant-table-wrapper .ant-table-filter-trigger {
+  .anticon.anticon-filter {
+    color: $text-color !important;
+  }
+}
+
+:where(.css-dev-only-do-not-override-240cud).ant-table-wrapper .ant-table-filter-trigger.active {
+  .anticon.anticon-filter {
+    color: $text-color !important;
+  }
+}
 
 @media (max-width: 600px) {
   .page {
