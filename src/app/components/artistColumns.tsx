@@ -6,7 +6,8 @@ import { Artist } from "../services/interfaces";
 
 export const artistColumns = (
   updateURLWithFilters: (searchValue: string) => void,
-  searchInput: React.RefObject<InputRef>
+  searchInput: React.RefObject<InputRef>,
+  hasData: boolean
 ): TableColumnsType<Artist> => [
   {
     title: "Borító",
@@ -21,41 +22,47 @@ export const artistColumns = (
     dataIndex: "name",
     key: "name",
     width: 500,
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-      <div>
-        <Input
-          ref={searchInput}
-          placeholder="Keresés név szerint..."
-          value={typeof selectedKeys[0] === "string" ? selectedKeys[0] : ""}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => {
-            confirm();
-            updateURLWithFilters(typeof selectedKeys[0] === "string" ? selectedKeys[0] : "");
-          }}
-        />
-        <Button
-          className="search-filter"
-          onClick={() => {
-            confirm();
-            updateURLWithFilters(typeof selectedKeys[0] === "string" ? selectedKeys[0] : "");
-          }}
-        >
-          Keresés
-        </Button>
-        <Button
-          className="clear-filter"
-          onClick={() => {
-            clearFilters?.();
-            updateURLWithFilters("");
-            confirm();
-          }}
-        >
-          Törlés
-        </Button>
-      </div>
-    ),
-    filterIcon: (filtered) => <FilterOutlined style={{ color: filtered ? "#1890ff" : undefined }} />,
-    onFilter: (value, record) => typeof value === "string" && record.name.toLowerCase().includes(value.toLowerCase()),
+    filterDropdown: hasData
+      ? ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+          <div>
+            <Input
+              ref={searchInput}
+              placeholder="Keresés név szerint..."
+              value={typeof selectedKeys[0] === "string" ? selectedKeys[0] : ""}
+              onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => {
+                confirm();
+                updateURLWithFilters(typeof selectedKeys[0] === "string" ? selectedKeys[0] : "");
+              }}
+            />
+            <Button
+              className="search-filter"
+              onClick={() => {
+                confirm();
+                updateURLWithFilters(typeof selectedKeys[0] === "string" ? selectedKeys[0] : "");
+              }}
+            >
+              Keresés
+            </Button>
+            <Button
+              className="clear-filter"
+              onClick={() => {
+                clearFilters?.();
+                updateURLWithFilters("");
+                confirm();
+              }}
+            >
+              Törlés
+            </Button>
+          </div>
+        )
+      : undefined,
+    filterIcon: hasData
+      ? (filtered) => <FilterOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      : undefined,
+    onFilter: hasData
+      ? (value, record) => typeof value === "string" && record.name.toLowerCase().includes(value.toLowerCase())
+      : undefined,
   },
   {
     title: "Albumok",
