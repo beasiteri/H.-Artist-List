@@ -27,7 +27,7 @@ export const Artists = () => {
     }
 
     try {
-      const params: Record<string, any> = {
+      const params: Record<string, string | number | boolean> = {
         page: newPage,
         per_page: 50,
         include_image: true,
