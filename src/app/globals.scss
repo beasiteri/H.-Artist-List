@@ -1,6 +1,223 @@
+$primary-color: #6a3f6b;
+$secondary-color: #865394;
+$hover-color: #bb5656;
+$search-btn-color: #593b5d;
+$table-body-bg: #b092b1;
+$text-color: white;
+$placeholder-color: #6f6a6a;
+
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
+.ant-spin-container {
+  height: calc(100vh - 180px);
+}
+
+.ant-table {
+  display: flex;
+  flex-direction: column;
+  height: var(--table-height);
+
+  .ant-table-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .ant-table-thead {
+    background-color: $primary-color;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+    tr {
+      th {
+        background-color: $primary-color;
+        color: $text-color;
+
+        &:first-of-type {
+          width: 100px;
+        }
+      }
+    }
+  }
+
+  .ant-table-tbody {
+    background-color: $table-body-bg;
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+
+    td {
+      &:first-child {
+        width: 3%;
+      }
+    
+      &:nth-child(2) {
+        width: 30%;
+      }
+    
+      &:nth-child(3) {
+        width: 6%;
+      }
+    }
+  }
+
+  .ant-table-tbody>tr.ant-table-placeholder:hover>th,
+  .ant-table-tbody>tr.ant-table-placeholder:hover>td,
+  .ant-table-tbody>tr.ant-table-placeholder {
+    background-color: $secondary-color;
+    height: calc(100vh - 300px);
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .ant-table-cell {
+    background-color: $secondary-color;
+    color: $text-color;
+    padding: 8px !important;
+
+    &:first-child {
+      padding-left: 16px !important;
+    }
+  }
+
+  .ant-dropdown-trigger {
+    background-color: $primary-color;
+    color: $text-color;
+    margin-right: 0;
+
+    &:hover {
+      background-color: $primary-color;
+      color: $text-color;
+      margin-right: 0;
+    }
+  }
+
+  .ant-empty-description {
+    color: $text-color;
+  }
+}
+
+.ant-table-filter-dropdown  {
+  & > div {
+    padding: 8;
+  }
+
+  input {
+    display: block;
+    margin-bottom: 8px;
+    width: 188px;
+  }
+}
+
+.ant-table-cell img {
+  border-radius: 5px;
+  vertical-align: bottom;
+}
+
+.ant-table .ant-table-tbody .ant-table-placeholder > .ant-table-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+}
+
+.search-filter {
+  margin-right: 8px;
+  width: 90px;
+
+  background-color: $search-btn-color;
+  color: $text-color;
+}
+
+.search-filter,
+.search-filter:hover {
+  background-color: $search-btn-color !important;
+  color: $text-color;
+}
+
+.clear-filter {
+  background-color: $hover-color;
+  color: $text-color;
+  width: 90px;
+}
+
+.ant-pagination {
+  bottom: 15px;
+  position: absolute;
+  width: 100%;
+
+  .ant-pagination-item-active {
+    background-color: $text-color;
+    border-color: $secondary-color;
+    font-weight: 600;
+  
+    &:hover {
+      border-color: $primary-color;
+    }
+  
+    a {
+      color: $secondary-color;
+  
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+  border-color: $secondary-color;
+
+  &:hover {
+    border-color: $secondary-color;
+  }
+}
+
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: $primary-color;
+  color: $text-color;
+}
+
+.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: $hover-color;
+  border: none;
+  color: $text-color;
+}
+
+.ant-table-wrapper {
+  .ant-table {
+    background-color: $secondary-color;
+  }
+
+  .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover {
+    background-color: $hover-color;
+  }
+}
+
+:where(.css-dev-only-do-not-override-240cud).ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+  border-color: $primary-color;
+}
+
+:where(.css-dev-only-do-not-override-240cud).ant-input::placeholder {
+  color: $placeholder-color;
+  user-select: none;
+}
+
+
+@media (max-width: 600px) {
+  .page {
+    overflow-x: auto;
+    width: 100%;
+
+    .main {
+      padding: 25px 15px;
+    }
+  }
+}
