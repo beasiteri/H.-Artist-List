@@ -24,7 +24,7 @@ export const artistColumns = (
     width: 500,
     filterDropdown: hasData
       ? ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-          <div>
+          <div style={{ padding: 8 }}>
             <Input
               ref={searchInput}
               placeholder="Keresés név szerint..."
