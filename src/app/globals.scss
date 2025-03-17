@@ -229,9 +229,19 @@ $placeholder-color: #6f6a6a;
   }
 }
 
+@media (min-width: 383px) and (max-width: 599px) {
+  .ant-table .ant-table-tbody .ant-table-placeholder > .ant-table-cell {
+    width: 35%;
+  }
+}
+
 @media (min-width: 369px) and (max-width: 382px) {
   .ant-pagination {
     bottom: 0px;
+  }
+
+  .ant-table .ant-table-tbody .ant-table-placeholder > .ant-table-cell {
+    width: 35%;
   }
 }
 
@@ -239,4 +249,8 @@ $placeholder-color: #6f6a6a;
   .ant-pagination {
     bottom: -45px;
   }
+
+  .ant-table .ant-table-tbody .ant-table-placeholder > .ant-table-cell {
+    width: 35%;
+}
 }
