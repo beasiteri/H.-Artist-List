@@ -8,7 +8,7 @@ export const artistColumns = (
   updateURLWithFilters: (searchValue: string) => void,
   searchInput: React.RefObject<InputRef>,
   hasData: boolean,
-  searchText: string // Pass the current searchText to manage the filter icon
+  searchText: string
 ): TableColumnsType<Artist> => [
   {
     title: "Borító",
