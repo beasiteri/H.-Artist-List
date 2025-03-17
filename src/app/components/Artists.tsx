@@ -13,7 +13,7 @@ export const Artists = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [displayedArtists, setDisplayedArtists] = useState<ApiResponse["data"]>([]);
   const [page, setPage] = useState<number>(1);
-  const [searchText, setSearchText] = useState<string>("");
+  const [searchText, setSearchText] = useState<string>(""); // Manage searchText state
   const [selectedLetter, setSelectedLetter] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("is_primary");
   const [totalItems, setTotalItems] = useState<number>(0);
@@ -27,24 +27,33 @@ export const Artists = () => {
     }
 
     try {
-      const params: Record<string, string | number | boolean> = {
+      const params: {
+        page: number;
+        per_page: number;
+        include_image: boolean;
+        search?: string;
+        letter?: string;
+        type?: string;
+      } = {
         page: newPage,
         per_page: 50,
         include_image: true,
       };
-  
+
       if (searchText.trim()) {
         params.search = searchText;
       }
-  
+
       if (selectedLetter.trim()) {
         params.letter = selectedLetter;
       }
-  
+
       if (selectedType.trim()) {
         params.type = selectedType;
       }
-  
+
+      console.log("Fetching artists with params:", params);
+
       const response = await fetchArtists(params);
       setDisplayedArtists(response.data.slice(0, 50));
       setTotalItems(response.pagination.total_items);
@@ -143,11 +152,12 @@ export const Artists = () => {
             </div>
           ) : (
             <Table
-            dataSource={displayedArtists.length > 0 ? displayedArtists : []}
+              dataSource={displayedArtists.length > 0 ? displayedArtists : []}
               columns={artistColumns(
                 (search) => updateURLWithFilters(search, selectedLetter, selectedType),
                 searchInput,
-                displayedArtists.length > 0
+                displayedArtists.length > 0,
+                searchText
               )}
               rowKey={(record) => record.id || Math.random()}
               pagination={{

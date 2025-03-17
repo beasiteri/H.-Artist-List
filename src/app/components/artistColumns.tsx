@@ -7,7 +7,8 @@ import { Artist } from "../services/interfaces";
 export const artistColumns = (
   updateURLWithFilters: (searchValue: string) => void,
   searchInput: React.RefObject<InputRef>,
-  hasData: boolean
+  hasData: boolean,
+  searchText: string // Pass the current searchText to manage the filter icon
 ): TableColumnsType<Artist> => [
   {
     title: "Borító",
@@ -57,8 +58,8 @@ export const artistColumns = (
           </div>
         )
       : undefined,
-    filterIcon: (filtered) =>
-      filtered ? (
+    filterIcon: () =>
+      searchText ? (
         <FilterFilled style={{ color: "#1890ff" }} />
       ) : (
         <FilterOutlined style={{ color: "#bfbfbf" }} />
