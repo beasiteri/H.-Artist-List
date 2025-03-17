@@ -27,14 +27,27 @@ export const Artists = () => {
     }
 
     try {
-      const response = await fetchArtists({
+      const params: Record<string, any> = {
         page: newPage,
         per_page: 50,
         include_image: true,
-        search: searchText,
-        letter: selectedLetter,
-        type: selectedType,
-      });
+      };
+  
+      if (searchText.trim()) {
+        params.search = searchText;
+      }
+  
+      if (selectedLetter.trim()) {
+        params.letter = selectedLetter;
+      }
+  
+      if (selectedType.trim()) {
+        params.type = selectedType;
+      }
+  
+      console.log("Fetching artists with params:", params); // Debugging log
+  
+      const response = await fetchArtists(params);
       setDisplayedArtists(response.data.slice(0, 50));
       setTotalItems(response.pagination.total_items);
     } catch (err) {
@@ -94,7 +107,6 @@ export const Artists = () => {
 
     router.replace(`?${params.toString()}`);
 
-    // Only update state if the value has changed
     if (searchValue !== undefined && searchValue !== searchText) setSearchText(searchValue);
     if (letterValue !== undefined && letterValue !== selectedLetter) setSelectedLetter(letterValue);
     if (typeValue !== undefined && typeValue !== selectedType) setSelectedType(typeValue);
@@ -133,13 +145,13 @@ export const Artists = () => {
             </div>
           ) : (
             <Table
-              dataSource={displayedArtists}
+            dataSource={displayedArtists.length > 0 ? displayedArtists : []}
               columns={artistColumns(
                 (search) => updateURLWithFilters(search, selectedLetter, selectedType),
                 searchInput,
                 displayedArtists.length > 0
               )}
-              rowKey={(record) => record.id}
+              rowKey={(record) => record.id || Math.random()}
               pagination={{
                 current: page,
                 pageSize: 50,

@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.14.0",
     "antd": "^5.24.3",
     "axios": "^1.8.3",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "next": "15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
