@@ -13,11 +13,12 @@ export const Artists = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [displayedArtists, setDisplayedArtists] = useState<ApiResponse["data"]>([]);
   const [page, setPage] = useState<number>(1);
-  const [searchText, setSearchText] = useState<string>(""); // Manage searchText state
+  const [searchText, setSearchText] = useState<string>("");
   const [selectedLetter, setSelectedLetter] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("is_primary");
   const [totalItems, setTotalItems] = useState<number>(0);
   const searchInput = useRef<InputRef>(null!);
+  const isInitialRender = useRef(true);
 
   const fetchArtistsForPage = async (newPage: number, isInitialLoad = false) => {
     if (isInitialLoad) {
@@ -52,8 +53,6 @@ export const Artists = () => {
         params.type = selectedType;
       }
 
-      console.log("Fetching artists with params:", params);
-
       const response = await fetchArtists(params);
       setDisplayedArtists(response.data.slice(0, 50));
       setTotalItems(response.pagination.total_items);
@@ -79,6 +78,10 @@ export const Artists = () => {
   }, []);
 
   useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
     fetchArtistsForPage(page);
   }, [page, searchText, selectedLetter, selectedType]);
 
@@ -137,6 +140,7 @@ export const Artists = () => {
           <h1>Előadók és zeneszerzők</h1>
           <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
             <Select
+              data-testid="type-select"
               value={typeOptions[selectedType] || "Elsődleges"}
               onChange={(value) => updateURLWithFilters(undefined, undefined, value)}
               style={{ width: 160 }}
